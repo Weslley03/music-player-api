@@ -1,14 +1,12 @@
 package com.weftecnologia.music_player_api.dto;
 
-import org.bson.types.Binary;
-
 public class ResponseUserDTO {
   private String id;
   private String name;
   private String email;
-  private Binary avatar;
+  private String avatar;
 
-  public ResponseUserDTO(String id, String name, String email, Binary avatar) {
+  public ResponseUserDTO(String id, String name, String email, String avatar) {
     this.id = id;
     this.name = name;
     this.email = name;
@@ -27,7 +25,7 @@ public class ResponseUserDTO {
     return email;
   };
 
-  public Binary getAvatar() {
+  public String getAvatar() {
     return avatar;
   };
 };
