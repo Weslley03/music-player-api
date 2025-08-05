@@ -9,4 +9,8 @@ public class EnvVariables {
   public static String getMongoUri() {
     return dotenv.get("MONGODB_URI");
   }
+
+  public static String getCorsAllowedOrigin() {
+    return dotenv.get("CORS_ALLOWED_ORIGIN");
+  }
 }
