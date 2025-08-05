@@ -10,6 +10,7 @@ import com.weftecnologia.music_player_api.dto.CreateUserDTO;
 import com.weftecnologia.music_player_api.dto.ResponseUserDTO;
 import com.weftecnologia.music_player_api.entity.User;
 import com.weftecnologia.music_player_api.exception.handler.exceptions.GenericNotFoundException;
+import com.weftecnologia.music_player_api.util.ConvertBinary;
 import com.weftecnologia.music_player_api.util.GenerateUUID;
 
 @Service
@@ -20,11 +21,6 @@ public class UserRepository {
   public UserRepository(MongoTemplate mongoTemplate) {
     this.mongoTemplate = mongoTemplate;
   };
-
-  private String convertBinaryToBase64(Binary binary) {
-    byte[] bytes = binary.getData();
-    return Base64.getEncoder().encodeToString(bytes);
-  }
 
   public ResponseUserDTO insert(CreateUserDTO dto) {
     try {
@@ -39,7 +35,7 @@ public class UserRepository {
 
       mongoTemplate.insert(user, "user");
 
-      String avatarInBase64 = convertBinaryToBase64(user.getAvatar());
+      String avatarInBase64 = ConvertBinary.toBase64(user.getAvatar());
 
       ResponseUserDTO userResponse = new ResponseUserDTO(
           user.getId(),
@@ -62,7 +58,7 @@ public class UserRepository {
         throw new GenericNotFoundException("usuário com ID " + id + " não encontrado.");
       }
 
-      String avatarInBase64 = convertBinaryToBase64(user.getAvatar());
+      String avatarInBase64 = ConvertBinary.toBase64(user.getAvatar());
 
       ResponseUserDTO userResponse = new ResponseUserDTO(
           user.getId(),
