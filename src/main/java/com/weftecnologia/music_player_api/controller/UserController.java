@@ -1,6 +1,8 @@
 package com.weftecnologia.music_player_api.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +28,18 @@ public class UserController {
   @PostMapping
   public ResponseApiDTO<ResponseUserDTO> create(@Valid @RequestBody CreateUserDTO dto) {
     ResponseUserDTO userResponse = userRepository.insert(dto);
-    ResponseApiDTO<ResponseUserDTO> response = new ResponseApiDTO<ResponseUserDTO>(
+    return new ResponseApiDTO<ResponseUserDTO>(
         "usuário cadastrado com sucesso.",
         HttpStatus.OK.value(),
         userResponse);
+  }
 
-    return response;
+  @GetMapping("/informations/{id}")
+  public ResponseApiDTO<ResponseUserDTO> getUserInformations(@PathVariable String id) {
+    ResponseUserDTO userResponse = userRepository.getInformationsById(id);
+    return new ResponseApiDTO<ResponseUserDTO>(
+        "usuário encontrado com sucesso.",
+        HttpStatus.OK.value(),
+        userResponse);
   }
 }

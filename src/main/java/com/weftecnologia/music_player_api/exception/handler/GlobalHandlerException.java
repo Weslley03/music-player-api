@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.weftecnologia.music_player_api.exception.handler.exceptions.GenericNotFoundException;
+
 @RestControllerAdvice
 public class GlobalHandlerException {
 
@@ -25,5 +27,13 @@ public class GlobalHandlerException {
             "message", "erro de validação.",
             "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
             "errors", errors));
+  }
+
+  @ExceptionHandler(GenericNotFoundException.class)
+  public ResponseEntity<?> handleNotFoundException(GenericNotFoundException ex) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        Map.of(
+            "message", ex.getMessage(),
+            "status", String.valueOf(HttpStatus.NOT_FOUND.value())));
   }
 }
