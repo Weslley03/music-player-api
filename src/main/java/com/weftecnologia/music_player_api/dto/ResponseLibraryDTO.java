@@ -8,21 +8,16 @@ public class ResponseLibraryDTO {
 
   private String id;
   private String userId;
-  private String img;
-  private String title;
-  private String description;
-  private Date createdAt;
+  private String refId;
   private LibraryType type;
+  private Date createdAt;
 
-  public ResponseLibraryDTO(String id, String userId, String img, String title, String description, Date createdAt,
-      LibraryType type) {
+  public ResponseLibraryDTO(String id, String userId, String refId, LibraryType type, Date createdAt) {
     this.id = id;
     this.userId = userId;
-    this.img = img;
-    this.title = title;
-    this.description = description;
-    this.createdAt = createdAt;
+    this.refId = refId;
     this.type = type;
+    this.createdAt = createdAt;
   }
 
   public String getId() {
@@ -33,23 +28,15 @@ public class ResponseLibraryDTO {
     return userId;
   }
 
-  public String getImg() {
-    return img;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
+  public String getRefId() {
+    return refId;
   }
 
   public LibraryType getType() {
     return type;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
   }
 }
