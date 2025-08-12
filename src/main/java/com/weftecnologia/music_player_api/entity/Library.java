@@ -2,7 +2,6 @@ package com.weftecnologia.music_player_api.entity;
 
 import java.util.Date;
 
-import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,21 +14,16 @@ public class Library {
   private String id;
 
   private String userId;
-  private Binary img;
-  private String title;
-  private String description;
-  private Date createdAt;
+  private String refId;
   private LibraryType type;
+  private Date createdAt;
 
-  public Library(String id, String userId, Binary img, String title, String description, Date createdAt,
-      LibraryType type) {
+  public Library(String id, String userId, String refId, LibraryType type, Date createdAt) {
     this.id = id;
     this.userId = userId;
-    this.img = img;
-    this.title = title;
-    this.description = description;
-    this.createdAt = createdAt;
+    this.refId = refId;
     this.type = type;
+    this.createdAt = createdAt;
   }
 
   public String getId() {
@@ -40,23 +34,15 @@ public class Library {
     return userId;
   }
 
-  public Binary getImg() {
-    return img;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
+  public String getRefId() {
+    return refId;
   }
 
   public LibraryType getType() {
     return type;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
   }
 }

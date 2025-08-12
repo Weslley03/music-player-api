@@ -1,7 +1,5 @@
 package com.weftecnologia.music_player_api.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.weftecnologia.music_player_api.dto.AddLibraryDTO;
 import com.weftecnologia.music_player_api.dto.ResponseApiDTO;
 import com.weftecnologia.music_player_api.dto.ResponseLibraryDTO;
+import com.weftecnologia.music_player_api.entity.Library;
 import com.weftecnologia.music_player_api.repository.LibraryRepository;
 
 import jakarta.validation.Valid;
@@ -28,18 +27,18 @@ public class LibraryController {
   }
 
   @PostMapping
-  public ResponseApiDTO<ResponseLibraryDTO> addLibrary(@Valid @RequestBody AddLibraryDTO dto) {
-    ResponseLibraryDTO library = libraryRepository.addLibrary(dto);
-    return new ResponseApiDTO<ResponseLibraryDTO>(
+  public ResponseApiDTO<Library> addLibrary(@Valid @RequestBody AddLibraryDTO dto) {
+    Library library = libraryRepository.addLibrary(dto);
+    return new ResponseApiDTO<Library>(
         "biblioteca cadastrada com sucesso.",
         HttpStatus.OK.value(),
         library);
   };
 
   @GetMapping("/by/{userId}")
-  public ResponseApiDTO<List<ResponseLibraryDTO>> findAllByUserId(@PathVariable String userId) {
-    List<ResponseLibraryDTO> libraryList = libraryRepository.findAllByUserId(userId);
-    return new ResponseApiDTO<List<ResponseLibraryDTO>>(
+  public ResponseApiDTO<ResponseLibraryDTO> findAllByUserId(@PathVariable String userId) {
+    ResponseLibraryDTO libraryList = libraryRepository.findAllByUserId(userId);
+    return new ResponseApiDTO<ResponseLibraryDTO>(
         "bibliotecas relacionadas ao usuário encontradas",
         HttpStatus.OK.value(),
         libraryList);

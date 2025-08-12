@@ -2,18 +2,21 @@ package com.weftecnologia.music_player_api.dto;
 
 import com.weftecnologia.music_player_api.enums.LibraryType;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class AddLibraryDTO {
+
+  @NotBlank(message = "userId é obrigatório")
   private String userId;
-  private String img;
-  private String title;
-  private String description;
+
+  @NotBlank(message = "refId é obrigatório")
+  private String refId;
+
   private LibraryType type;
 
-  public AddLibraryDTO(String userId, String img, String title, String description, LibraryType type) {
+  public AddLibraryDTO(String userId, String refId, LibraryType type) {
     this.userId = userId;
-    this.img = img;
-    this.title = title;
-    this.description = description;
+    this.refId = refId;
     this.type = type;
   }
 
@@ -21,16 +24,8 @@ public class AddLibraryDTO {
     return userId;
   }
 
-  public String getImg() {
-    return img;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public String getDescription() {
-    return description;
+  public String getRefId() {
+    return refId;
   }
 
   public LibraryType getType() {
