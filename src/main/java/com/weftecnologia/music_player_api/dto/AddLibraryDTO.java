@@ -12,7 +12,6 @@ public class AddLibraryDTO {
   @NotBlank(message = "refId é obrigatório")
   private String refId;
 
-  @NotBlank(message = "type é obrigatório")
   private LibraryType type;
 
   public AddLibraryDTO(String userId, String refId, LibraryType type) {
