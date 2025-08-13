@@ -62,11 +62,11 @@ public class MusicRepository {
     try {
       Query query = new Query();
 
-      if (type.toLowerCase() == "album") {
+      if (type.equalsIgnoreCase("album")) {
         query.addCriteria(Criteria.where("albumId").is(refId));
       }
 
-      else if (type.toLowerCase() == "artist") {
+      else if (type.equalsIgnoreCase("artist")) {
         query.addCriteria(Criteria.where("artistId").is(refId));
       }
 
