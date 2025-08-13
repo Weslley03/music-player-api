@@ -1,33 +1,26 @@
-package com.weftecnologia.music_player_api.entity;
+package com.weftecnologia.music_player_api.dto;
 
 import java.util.Date;
 
-import org.bson.types.Binary;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+public class ResponseMusicDTO {
 
-@Document(collection = "music")
-public class Music {
-
-  @Id
   private String id;
-
   private String albumId;
   private String artistId;
-  private Binary img;
+  private String img;
   private String title;
   private String author;
-  private Binary src;
+  private String src;
   private Date createdAt;
 
-  public Music(
+  public ResponseMusicDTO(
       String id,
       String albumId,
       String artistId,
-      Binary img,
+      String img,
       String title,
       String author,
-      Binary src,
+      String src,
       Date createdAt) {
     this.id = id;
     this.albumId = albumId;
@@ -51,7 +44,7 @@ public class Music {
     return artistId;
   }
 
-  public Binary getImg() {
+  public String getImg() {
     return img;
   }
 
@@ -63,7 +56,7 @@ public class Music {
     return author;
   }
 
-  public Binary getSrc() {
+  public String getSrc() {
     return src;
   }
 
