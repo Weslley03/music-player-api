@@ -1,6 +1,9 @@
-package com.weftecnologia.music_player_api.dto;
+package com.weftecnologia.music_player_api.dto.library;
 
 import java.util.List;
+
+import com.weftecnologia.music_player_api.dto.album.ResponseAlbumDTO;
+import com.weftecnologia.music_player_api.dto.artist.ResponseArtistDTO;
 
 public class ResponseLibraryDTO {
 
