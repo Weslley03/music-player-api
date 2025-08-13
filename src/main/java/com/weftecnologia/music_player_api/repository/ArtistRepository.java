@@ -7,8 +7,8 @@ import org.bson.types.Binary;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-import com.weftecnologia.music_player_api.dto.CreateArtistDTO;
-import com.weftecnologia.music_player_api.dto.ResponseArtistDTO;
+import com.weftecnologia.music_player_api.dto.artist.CreateArtistDTO;
+import com.weftecnologia.music_player_api.dto.artist.ResponseArtistDTO;
 import com.weftecnologia.music_player_api.entity.Artist;
 import com.weftecnologia.music_player_api.exception.handler.exceptions.GenericNotFoundException;
 import com.weftecnologia.music_player_api.util.ConvertBinary;
