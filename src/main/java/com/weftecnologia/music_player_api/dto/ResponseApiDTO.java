@@ -11,6 +11,11 @@ public class ResponseApiDTO<T> {
     this.response = response;
   }
 
+  public ResponseApiDTO(String message, int status) {
+    this.message = message;
+    this.status = status;
+  }
+
   public String getMessage() {
     return message;
   }

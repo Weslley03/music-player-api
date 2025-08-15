@@ -25,8 +25,8 @@ public class FavoriteArtistController {
   public ResponseApiDTO<Void> add(@Valid @RequestBody AddFavoriteArtistDTO dto) {
     boolean success = favoriteArtistRepository.add(dto);
     if (!success) {
-      return new ResponseApiDTO<Void>("não foi possivel concluir a ação.", HttpStatus.BAD_REQUEST.value(), null);
+      return new ResponseApiDTO<>("não foi possivel concluir a ação.", HttpStatus.BAD_REQUEST.value());
     }
-    return new ResponseApiDTO<Void>("adicionado com sucesso.", HttpStatus.OK.value(), null);
+    return new ResponseApiDTO<>("adicionado com sucesso.", HttpStatus.OK.value());
   }
 }
