@@ -8,6 +8,7 @@ import com.mongodb.client.MongoClient;
 import com.weftecnologia.music_player_api.dto.favorite_artist.AddFavoriteArtistDTO;
 import com.weftecnologia.music_player_api.dto.library.AddLibraryDTO;
 import com.weftecnologia.music_player_api.entity.FavoriteArtist;
+import com.weftecnologia.music_player_api.enums.LibraryType;
 
 @Service
 public class FavoriteArtistRepository {
@@ -32,7 +33,7 @@ public class FavoriteArtistRepository {
         FavoriteArtist favoriteArtist = new FavoriteArtist(dto.getArtistId(), dto.getUserId());
         mongoTemplate.insert(favoriteArtist, "favorite_artist");
 
-        AddLibraryDTO libraryDTO = new AddLibraryDTO(dto.getArtistId(), dto.getUserId(), dto.getType());
+        AddLibraryDTO libraryDTO = new AddLibraryDTO(dto.getArtistId(), dto.getUserId(), LibraryType.ARTIST);
         libraryRepository.addLibrary(libraryDTO);
 
         session.commitTransaction();
