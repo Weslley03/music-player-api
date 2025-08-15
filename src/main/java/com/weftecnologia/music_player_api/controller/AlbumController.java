@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weftecnologia.music_player_api.dto.CreateAlbumDTO;
-import com.weftecnologia.music_player_api.dto.ResponseAlbumDTO;
 import com.weftecnologia.music_player_api.dto.ResponseApiDTO;
+import com.weftecnologia.music_player_api.dto.album.CreateAlbumDTO;
+import com.weftecnologia.music_player_api.dto.album.ResponseAlbumDTO;
 import com.weftecnologia.music_player_api.repository.AlbumRepository;
 
 import jakarta.validation.Valid;

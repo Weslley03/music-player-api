@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weftecnologia.music_player_api.dto.CreateMusicDTO;
 import com.weftecnologia.music_player_api.dto.ResponseApiDTO;
-import com.weftecnologia.music_player_api.dto.ResponseMusicDTO;
+import com.weftecnologia.music_player_api.dto.music.CreateMusicDTO;
+import com.weftecnologia.music_player_api.dto.music.ResponseMusicDTO;
 import com.weftecnologia.music_player_api.repository.MusicRepository;
 
 @RestController

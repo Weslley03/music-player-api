@@ -1,4 +1,4 @@
-package com.weftecnologia.music_player_api.dto;
+package com.weftecnologia.music_player_api.dto.user;
 
 public class ResponseUserDTO {
   private String id;

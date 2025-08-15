@@ -9,10 +9,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import com.weftecnologia.music_player_api.dto.AddLibraryDTO;
-import com.weftecnologia.music_player_api.dto.ResponseAlbumDTO;
-import com.weftecnologia.music_player_api.dto.ResponseArtistDTO;
-import com.weftecnologia.music_player_api.dto.ResponseLibraryDTO;
+import com.weftecnologia.music_player_api.dto.album.ResponseAlbumDTO;
+import com.weftecnologia.music_player_api.dto.artist.ResponseArtistDTO;
+import com.weftecnologia.music_player_api.dto.library.AddLibraryDTO;
+import com.weftecnologia.music_player_api.dto.library.ResponseLibraryDTO;
 import com.weftecnologia.music_player_api.entity.Album;
 import com.weftecnologia.music_player_api.entity.Artist;
 import com.weftecnologia.music_player_api.entity.Library;

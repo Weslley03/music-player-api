@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import com.weftecnologia.music_player_api.dto.CreateMusicDTO;
-import com.weftecnologia.music_player_api.dto.ResponseMusicDTO;
+import com.weftecnologia.music_player_api.dto.music.CreateMusicDTO;
+import com.weftecnologia.music_player_api.dto.music.ResponseMusicDTO;
 import com.weftecnologia.music_player_api.entity.Music;
 import com.weftecnologia.music_player_api.util.ConvertBinary;
 import com.weftecnologia.music_player_api.util.GenerateUUID;

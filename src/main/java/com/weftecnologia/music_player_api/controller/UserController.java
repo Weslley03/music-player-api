@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weftecnologia.music_player_api.dto.CreateUserDTO;
 import com.weftecnologia.music_player_api.dto.ResponseApiDTO;
-import com.weftecnologia.music_player_api.dto.ResponseUserDTO;
+import com.weftecnologia.music_player_api.dto.user.AuthenticationDTO;
+import com.weftecnologia.music_player_api.dto.user.CreateUserDTO;
+import com.weftecnologia.music_player_api.dto.user.ResponseAuthDTO;
+import com.weftecnologia.music_player_api.dto.user.ResponseUserDTO;
 import com.weftecnologia.music_player_api.repository.UserRepository;
 
 import jakarta.validation.Valid;
@@ -41,5 +43,10 @@ public class UserController {
         "usuário encontrado com sucesso.",
         HttpStatus.OK.value(),
         userResponse);
+  }
+
+  @PostMapping("/authentication")
+  public ResponseAuthDTO login(@Valid @RequestBody AuthenticationDTO dto) {
+    return userRepository.login(dto);
   }
 }

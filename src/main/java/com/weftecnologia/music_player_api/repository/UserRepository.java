@@ -4,12 +4,17 @@ import java.util.Base64;
 
 import org.bson.types.Binary;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import com.weftecnologia.music_player_api.dto.CreateUserDTO;
-import com.weftecnologia.music_player_api.dto.ResponseUserDTO;
+import com.weftecnologia.music_player_api.dto.user.AuthenticationDTO;
+import com.weftecnologia.music_player_api.dto.user.CreateUserDTO;
+import com.weftecnologia.music_player_api.dto.user.ResponseAuthDTO;
+import com.weftecnologia.music_player_api.dto.user.ResponseUserDTO;
 import com.weftecnologia.music_player_api.entity.User;
 import com.weftecnologia.music_player_api.exception.handler.exceptions.GenericNotFoundException;
+import com.weftecnologia.music_player_api.security.PasswordEncoder;
 import com.weftecnologia.music_player_api.util.ConvertBinary;
 import com.weftecnologia.music_player_api.util.GenerateUUID;
 
@@ -17,9 +22,11 @@ import com.weftecnologia.music_player_api.util.GenerateUUID;
 public class UserRepository {
 
   private final MongoTemplate mongoTemplate;
+  private final PasswordEncoder encoder;
 
-  public UserRepository(MongoTemplate mongoTemplate) {
+  public UserRepository(MongoTemplate mongoTemplate, PasswordEncoder encoder) {
     this.mongoTemplate = mongoTemplate;
+    this.encoder = encoder;
   };
 
   public ResponseUserDTO insert(CreateUserDTO dto) {
@@ -30,7 +37,7 @@ public class UserRepository {
           GenerateUUID.generate(),
           dto.getName(),
           dto.getEmail(),
-          dto.getPassword(),
+          encoder.encode(dto.getPassword()),
           avatarDecoded);
 
       mongoTemplate.insert(user, "user");
@@ -71,5 +78,21 @@ public class UserRepository {
       e.printStackTrace();
       throw new RuntimeException("erro ao buscar usuário.", e);
     }
+  }
+
+  public ResponseAuthDTO login(AuthenticationDTO dto) {
+    User user = mongoTemplate.findOne(
+        Query.query(Criteria.where("email").is(dto.getEmail())),
+        User.class);
+
+    if (user == null) {
+      throw new GenericNotFoundException("usuário com email " + dto.getEmail() + " não encontrado.");
+    }
+
+    if (!encoder.matches(dto.getPassword(), user.getPassword())) {
+      return new ResponseAuthDTO(false, "senha inválida. tente novamente mais tarde.");
+    }
+
+    return new ResponseAuthDTO(true, "login realizado com sucesso.");
   }
 }
