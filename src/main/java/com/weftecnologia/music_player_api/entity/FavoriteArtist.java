@@ -1,5 +1,8 @@
 package com.weftecnologia.music_player_api.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "favorite_artist")
 public class FavoriteArtist {
   private String artistId;
   private String userId;
