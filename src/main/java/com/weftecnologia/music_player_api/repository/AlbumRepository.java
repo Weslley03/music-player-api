@@ -44,7 +44,8 @@ public class AlbumRepository {
           imgInBase64,
           album.getTitle(),
           album.getAuthor(),
-          album.getCreatedAt());
+          album.getCreatedAt(),
+          false);
 
       return albumResponse;
     } catch (Exception e) {
@@ -68,7 +69,8 @@ public class AlbumRepository {
           imgInBase64,
           album.getTitle(),
           album.getAuthor(),
-          album.getCreatedAt());
+          album.getCreatedAt(),
+          false);
 
       return albumResponse;
     } catch (Exception e) {

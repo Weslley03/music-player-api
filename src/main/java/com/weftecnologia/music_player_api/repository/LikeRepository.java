@@ -49,4 +49,18 @@ public class LikeRepository {
       return false;
     }
   }
+
+  public boolean hasLike(String userId, String refId) {
+    try {
+      Query query = Query.query(Criteria.where("refId").is(refId).and("userId").is(userId));
+      Like like = mongoTemplate.findOne(query, Like.class);
+      if (like == null) {
+        return false;
+      }
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

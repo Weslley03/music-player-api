@@ -42,7 +42,8 @@ public class ArtistRepository {
           artist.getId(),
           imgInBase64,
           artist.getName(),
-          artist.getCreatedAt());
+          artist.getCreatedAt(),
+          false);
 
       return artistResponse;
     } catch (Exception e) {
@@ -65,7 +66,8 @@ public class ArtistRepository {
           artist.getId(),
           imgInBase64,
           artist.getName(),
-          artist.getCreatedAt());
+          artist.getCreatedAt(),
+          false);
 
       return artistResponse;
     } catch (Exception e) {
