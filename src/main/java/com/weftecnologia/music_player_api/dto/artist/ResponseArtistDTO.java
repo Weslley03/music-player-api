@@ -7,8 +7,9 @@ public class ResponseArtistDTO {
   private String img;
   private String name;
   private Date createdAt;
+  private boolean liked;
 
-  public ResponseArtistDTO(String id, String img, String name, Date createdAt) {
+  public ResponseArtistDTO(String id, String img, String name, Date createdAt, boolean liked) {
     this.id = id;
     this.img = img;
     this.name = name;
@@ -29,5 +30,9 @@ public class ResponseArtistDTO {
 
   public Date getCreatedAt() {
     return createdAt;
+  }
+
+  public boolean isLiked() {
+    return liked;
   }
 }

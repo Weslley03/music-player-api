@@ -24,9 +24,11 @@ import com.weftecnologia.music_player_api.util.GenerateUUID;
 public class LibraryRepository {
 
   private MongoTemplate mongoTemplate;
+  private LikeRepository likeRepository;
 
-  public LibraryRepository(MongoTemplate mongoTemplate) {
+  public LibraryRepository(MongoTemplate mongoTemplate, LikeRepository likeRepository) {
     this.mongoTemplate = mongoTemplate;
+    this.likeRepository = likeRepository;
   }
 
   public Library addLibrary(AddLibraryDTO dto) {
@@ -47,6 +49,10 @@ public class LibraryRepository {
       e.printStackTrace();
       throw new RuntimeException("erro ao adicionar biblioteca", e);
     }
+  }
+
+  private boolean verifyIfLiked(String userId, String refId) {
+    return likeRepository.hasLike(userId, refId);
   }
 
   private <T, D> List<D> findAndMap(
@@ -87,7 +93,8 @@ public class LibraryRepository {
               ConvertBinary.toBase64(album.getImg()),
               album.getTitle(),
               album.getAuthor(),
-              album.getCreatedAt()));
+              album.getCreatedAt(),
+              verifyIfLiked(userId, album.getId())));
 
       List<ResponseArtistDTO> artistDTOs = findAndMap(
           libraries,
@@ -97,7 +104,8 @@ public class LibraryRepository {
               artist.getId(),
               ConvertBinary.toBase64(artist.getImg()),
               artist.getName(),
-              artist.getCreatedAt()));
+              artist.getCreatedAt(),
+              verifyIfLiked(userId, artist.getId())));
 
       return new ResponseLibraryDTO(userId, albumDTOs, artistDTOs);
     } catch (Exception e) {

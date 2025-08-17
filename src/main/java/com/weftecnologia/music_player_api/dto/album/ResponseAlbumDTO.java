@@ -9,13 +9,15 @@ public class ResponseAlbumDTO {
   private String title;
   private String author;
   private Date createdAt;
+  private boolean liked;
 
-  public ResponseAlbumDTO(String id, String img, String title, String author, Date createdAt) {
+  public ResponseAlbumDTO(String id, String img, String title, String author, Date createdAt, boolean liked) {
     this.id = id;
     this.img = img;
     this.title = title;
     this.author = author;
     this.createdAt = createdAt;
+    this.liked = liked;
   }
 
   public String getId() {
@@ -36,5 +38,9 @@ public class ResponseAlbumDTO {
 
   public Date getCreatedAt() {
     return createdAt;
+  }
+
+  public boolean isLiked() {
+    return liked;
   }
 }
