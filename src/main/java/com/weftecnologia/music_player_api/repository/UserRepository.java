@@ -86,11 +86,11 @@ public class UserRepository {
         User.class);
 
     if (user == null) {
-      throw new GenericNotFoundException("usuário com email " + dto.getEmail() + " não encontrado.");
+      return new ResponseAuthDTO(false, "usuário com email '" + dto.getEmail() + "' não encontrado.");
     }
 
     if (!encoder.matches(dto.getPassword(), user.getPassword())) {
-      return new ResponseAuthDTO(false, "senha inválida. tente novamente mais tarde.");
+      return new ResponseAuthDTO(false, "senha pro email '" + dto.getEmail() + "'' inválida.");
     }
 
     return new ResponseAuthDTO(true, "login realizado com sucesso.");
