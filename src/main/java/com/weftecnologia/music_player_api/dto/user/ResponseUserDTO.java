@@ -9,7 +9,7 @@ public class ResponseUserDTO {
   public ResponseUserDTO(String id, String name, String email, String avatar) {
     this.id = id;
     this.name = name;
-    this.email = name;
+    this.email = email;
     this.avatar = avatar;
   };
 
