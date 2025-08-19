@@ -33,7 +33,7 @@ public class FavoriteArtistRepository {
         FavoriteArtist favoriteArtist = new FavoriteArtist(dto.getArtistId(), dto.getUserId());
         mongoTemplate.insert(favoriteArtist, "favorite_artist");
 
-        AddLibraryDTO libraryDTO = new AddLibraryDTO(dto.getArtistId(), dto.getUserId(), LibraryType.ARTIST);
+        AddLibraryDTO libraryDTO = new AddLibraryDTO(dto.getUserId(), dto.getArtistId(), LibraryType.ARTIST);
         libraryRepository.addLibrary(libraryDTO);
 
         session.commitTransaction();
