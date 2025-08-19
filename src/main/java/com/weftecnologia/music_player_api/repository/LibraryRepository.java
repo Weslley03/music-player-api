@@ -1,6 +1,6 @@
 package com.weftecnologia.music_player_api.repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
 
@@ -33,7 +33,7 @@ public class LibraryRepository {
 
   public Library addLibrary(AddLibraryDTO dto) {
     try {
-      Date now = new Date();
+      LocalDate now = LocalDate.now();
 
       Library library = new Library(
           GenerateUUID.generate(),
