@@ -93,6 +93,12 @@ public class UserRepository {
       return new ResponseAuthDTO(false, "senha pro email '" + dto.getEmail() + "'' inválida.");
     }
 
-    return new ResponseAuthDTO(true, "login realizado com sucesso.");
+    ResponseUserDTO responseUserDTO = new ResponseUserDTO(
+        user.getId(),
+        user.getName(),
+        user.getEmail(),
+        ConvertBinary.toBase64(user.getAvatar()));
+
+    return new ResponseAuthDTO(true, "login realizado com sucesso.", responseUserDTO);
   }
 }
