@@ -33,6 +33,12 @@ public class LibraryRepository {
 
   public Library addLibrary(AddLibraryDTO dto) {
     try {
+      Library existingLibrary = this.verifyIfExist(dto.getUserId(), dto.getRefId());
+
+      if (existingLibrary != null) {
+        return existingLibrary;
+      }
+
       LocalDate now = LocalDate.now();
 
       Library library = new Library(
@@ -53,29 +59,6 @@ public class LibraryRepository {
 
   private boolean verifyIfLiked(String userId, String refId) {
     return likeRepository.hasLike(userId, refId);
-  }
-
-  private <T, D> List<D> findAndMap(
-      List<Library> libraries,
-      LibraryType filterBy,
-      Class<T> entityClass,
-      Function<T, D> mapper) {
-    List<String> ids = libraries.stream()
-        .filter(lib -> lib.getType() == filterBy)
-        .map(Library::getRefId)
-        .toList();
-
-    if (ids.isEmpty()) {
-      return List.of();
-    }
-
-    List<T> entities = mongoTemplate.find(
-        Query.query(Criteria.where("id").in(ids)),
-        entityClass);
-
-    return entities.stream()
-        .map(mapper)
-        .toList();
   }
 
   public ResponseLibraryDTO findAllByUserId(String userId) {
@@ -113,4 +96,33 @@ public class LibraryRepository {
       throw new RuntimeException("erro ao buscar bibliteca relacionada ao usuário.", e);
     }
   }
+
+  private <T, D> List<D> findAndMap(
+      List<Library> libraries,
+      LibraryType filterBy,
+      Class<T> entityClass,
+      Function<T, D> mapper) {
+    List<String> ids = libraries.stream()
+        .filter(lib -> lib.getType() == filterBy)
+        .map(Library::getRefId)
+        .toList();
+
+    if (ids.isEmpty()) {
+      return List.of();
+    }
+
+    List<T> entities = mongoTemplate.find(
+        Query.query(Criteria.where("id").in(ids)),
+        entityClass);
+
+    return entities.stream()
+        .map(mapper)
+        .toList();
+  }
+
+  private Library verifyIfExist(String userId, String refId) {
+    Query query = new Query();
+    query.addCriteria(Criteria.where("userId").is(userId).and("refId").is(refId));
+    return mongoTemplate.findOne(query, Library.class);
+  };
 }
