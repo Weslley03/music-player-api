@@ -2,9 +2,11 @@ package com.weftecnologia.music_player_api.repository;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import org.bson.types.Binary;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.weftecnologia.music_player_api.dto.artist.CreateArtistDTO;
@@ -73,6 +75,25 @@ public class ArtistRepository {
     } catch (Exception e) {
       e.printStackTrace();
       throw new RuntimeException("erro ao buscar artista.", e);
+    }
+  }
+
+  public List<ResponseArtistDTO> getAllArtist() {
+    try {
+      Query query = new Query();
+      query.limit(10);
+      List<Artist> artists = mongoTemplate.find(query, Artist.class);
+
+      return artists.stream()
+          .map(artist -> new ResponseArtistDTO(
+              artist.getId(),
+              ConvertBinary.toBase64(artist.getImg()),
+              artist.getName(),
+              artist.getCreatedAt()))
+          .toList();
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException("erro ao tentar buscar artistas.", e);
     }
   }
 }

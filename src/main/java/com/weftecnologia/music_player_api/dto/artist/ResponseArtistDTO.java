@@ -14,6 +14,14 @@ public class ResponseArtistDTO {
     this.img = img;
     this.name = name;
     this.createdAt = createdAt;
+    this.liked = liked;
+  };
+
+  public ResponseArtistDTO(String id, String img, String name, Date createdAt) {
+    this.id = id;
+    this.img = img;
+    this.name = name;
+    this.createdAt = createdAt;
   };
 
   public String getId() {
