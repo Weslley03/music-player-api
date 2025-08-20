@@ -14,13 +14,15 @@ public class User {
   private String email;
   private String password;
   private Binary avatar;
+  private boolean firtsAccess;
 
-  public User(String id, String name, String email, String password, Binary avatar) {
+  public User(String id, String name, String email, String password, Binary avatar, boolean firtsAccess) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.avatar = avatar;
+    this.firtsAccess = firtsAccess;
   }
 
   public String getId() {
@@ -41,5 +43,9 @@ public class User {
 
   public Binary getAvatar() {
     return this.avatar;
+  }
+
+  public boolean isFirtsAccess() {
+    return firtsAccess;
   }
 }

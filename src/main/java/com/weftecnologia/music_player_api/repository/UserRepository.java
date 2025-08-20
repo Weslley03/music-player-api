@@ -38,7 +38,8 @@ public class UserRepository {
           dto.getName(),
           dto.getEmail(),
           encoder.encode(dto.getPassword()),
-          avatarDecoded);
+          avatarDecoded,
+          false);
 
       mongoTemplate.insert(user, "user");
 
@@ -48,7 +49,8 @@ public class UserRepository {
           user.getId(),
           user.getName(),
           user.getEmail(),
-          avatarInBase64);
+          avatarInBase64,
+          user.isFirtsAccess());
 
       return userResponse;
     } catch (Exception e) {
@@ -71,7 +73,8 @@ public class UserRepository {
           user.getId(),
           user.getName(),
           user.getEmail(),
-          avatarInBase64);
+          avatarInBase64,
+          user.isFirtsAccess());
 
       return userResponse;
     } catch (Exception e) {
@@ -86,13 +89,20 @@ public class UserRepository {
         User.class);
 
     if (user == null) {
-      throw new GenericNotFoundException("usuário com email " + dto.getEmail() + " não encontrado.");
+      return new ResponseAuthDTO(false, "usuário com email '" + dto.getEmail() + "' não encontrado.");
     }
 
     if (!encoder.matches(dto.getPassword(), user.getPassword())) {
-      return new ResponseAuthDTO(false, "senha inválida. tente novamente mais tarde.");
+      return new ResponseAuthDTO(false, "senha pro email '" + dto.getEmail() + "'' inválida.");
     }
 
-    return new ResponseAuthDTO(true, "login realizado com sucesso.");
+    ResponseUserDTO responseUserDTO = new ResponseUserDTO(
+        user.getId(),
+        user.getName(),
+        user.getEmail(),
+        ConvertBinary.toBase64(user.getAvatar()),
+        user.isFirtsAccess());
+
+    return new ResponseAuthDTO(true, "login realizado com sucesso.", "0123456789", responseUserDTO);
   }
 }

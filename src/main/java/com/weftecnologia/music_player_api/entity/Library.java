@@ -1,6 +1,6 @@
 package com.weftecnologia.music_player_api.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,9 +16,9 @@ public class Library {
   private String userId;
   private String refId;
   private LibraryType type;
-  private Date createdAt;
+  private LocalDate createdAt;
 
-  public Library(String id, String userId, String refId, LibraryType type, Date createdAt) {
+  public Library(String id, String userId, String refId, LibraryType type, LocalDate createdAt) {
     this.id = id;
     this.userId = userId;
     this.refId = refId;
@@ -42,7 +42,7 @@ public class Library {
     return type;
   }
 
-  public Date getCreatedAt() {
+  public LocalDate getCreatedAt() {
     return createdAt;
   }
 }

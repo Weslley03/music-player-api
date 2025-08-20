@@ -1,5 +1,8 @@
 package com.weftecnologia.music_player_api.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +33,17 @@ public class FavoriteArtistRepository {
     try (ClientSession session = mongoClient.startSession()) {
       session.startTransaction();
       try {
-        FavoriteArtist favoriteArtist = new FavoriteArtist(dto.getArtistId(), dto.getUserId());
-        mongoTemplate.insert(favoriteArtist, "favorite_artist");
 
-        AddLibraryDTO libraryDTO = new AddLibraryDTO(dto.getArtistId(), dto.getUserId(), LibraryType.ARTIST);
+        List<FavoriteArtist> favoriteArtistToInsert = new ArrayList<>();
+
+        for (String artistId : dto.getArtistId()) {
+          FavoriteArtist favoriteArtist = new FavoriteArtist(artistId, dto.getUserId());
+          favoriteArtistToInsert.add(favoriteArtist);
+        }
+
+        mongoTemplate.insert(favoriteArtistToInsert, "favorite_artist");
+
+        AddLibraryDTO libraryDTO = new AddLibraryDTO(dto.getUserId(), dto.getArtistId(), LibraryType.ARTIST);
         libraryRepository.addLibrary(libraryDTO);
 
         session.commitTransaction();
