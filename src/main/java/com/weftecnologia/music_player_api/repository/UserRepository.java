@@ -38,7 +38,8 @@ public class UserRepository {
           dto.getName(),
           dto.getEmail(),
           encoder.encode(dto.getPassword()),
-          avatarDecoded);
+          avatarDecoded,
+          false);
 
       mongoTemplate.insert(user, "user");
 
@@ -48,7 +49,8 @@ public class UserRepository {
           user.getId(),
           user.getName(),
           user.getEmail(),
-          avatarInBase64);
+          avatarInBase64,
+          user.isFirtsAccess());
 
       return userResponse;
     } catch (Exception e) {
@@ -71,7 +73,8 @@ public class UserRepository {
           user.getId(),
           user.getName(),
           user.getEmail(),
-          avatarInBase64);
+          avatarInBase64,
+          user.isFirtsAccess());
 
       return userResponse;
     } catch (Exception e) {
@@ -97,8 +100,9 @@ public class UserRepository {
         user.getId(),
         user.getName(),
         user.getEmail(),
-        ConvertBinary.toBase64(user.getAvatar()));
+        ConvertBinary.toBase64(user.getAvatar()),
+        user.isFirtsAccess());
 
-    return new ResponseAuthDTO(true, "login realizado com sucesso.", responseUserDTO);
+    return new ResponseAuthDTO(true, "login realizado com sucesso.", "0123456789", responseUserDTO);
   }
 }

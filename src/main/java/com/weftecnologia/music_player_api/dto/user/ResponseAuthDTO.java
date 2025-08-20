@@ -3,6 +3,7 @@ package com.weftecnologia.music_player_api.dto.user;
 public class ResponseAuthDTO {
   private boolean success;
   private String message;
+  private String token;
   private ResponseUserDTO user;
 
   public ResponseAuthDTO(boolean success, String message) {
@@ -10,7 +11,7 @@ public class ResponseAuthDTO {
     this.message = message;
   }
 
-  public ResponseAuthDTO(boolean success, String message, ResponseUserDTO user) {
+  public ResponseAuthDTO(boolean success, String message, String token, ResponseUserDTO user) {
     this.success = success;
     this.message = message;
     this.user = user;
@@ -22,6 +23,10 @@ public class ResponseAuthDTO {
 
   public String getMessage() {
     return message;
+  }
+
+  public String getToken() {
+    return token;
   }
 
   public ResponseUserDTO getUser() {
