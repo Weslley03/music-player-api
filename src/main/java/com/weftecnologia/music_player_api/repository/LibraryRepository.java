@@ -1,8 +1,11 @@
 package com.weftecnologia.music_player_api.repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -31,34 +34,39 @@ public class LibraryRepository {
     this.likeRepository = likeRepository;
   }
 
-  public Library addLibrary(AddLibraryDTO dto) {
+  public List<Library> addLibrary(AddLibraryDTO dto) {
     try {
-      Library existingLibrary = this.verifyIfExist(dto.getUserId(), dto.getRefId());
+      List<Library> existingLibraries = this.findLibrariesByUserId(dto.getUserId());
 
-      if (existingLibrary != null) {
-        return existingLibrary;
-      }
+      Set<String> existingRefIds = existingLibraries.stream()
+          .map(Library::getRefId)
+          .collect(Collectors.toSet());
+
+      List<Library> librariesToInsert = new ArrayList<>();
 
       LocalDate now = LocalDate.now();
 
-      Library library = new Library(
-          GenerateUUID.generate(),
-          dto.getUserId(),
-          dto.getRefId(),
-          dto.getType(),
-          now);
+      for (String refId : dto.getRefId()) {
+        if (!existingRefIds.contains(refId)) {
+          Library library = new Library(
+              GenerateUUID.generate(),
+              dto.getUserId(),
+              refId,
+              dto.getType(),
+              now);
+          librariesToInsert.add(library);
+        }
+      }
 
-      mongoTemplate.insert(library, "library");
+      if (!librariesToInsert.isEmpty()) {
+        mongoTemplate.insert(librariesToInsert, "library");
+      }
 
-      return library;
+      return this.findLibrariesByUserId(dto.getUserId());
     } catch (Exception e) {
       e.printStackTrace();
       throw new RuntimeException("erro ao adicionar biblioteca", e);
     }
-  }
-
-  private boolean verifyIfLiked(String userId, String refId) {
-    return likeRepository.hasLike(userId, refId);
   }
 
   public ResponseLibraryDTO findAllByUserId(String userId) {
@@ -120,9 +128,13 @@ public class LibraryRepository {
         .toList();
   }
 
-  private Library verifyIfExist(String userId, String refId) {
+  private boolean verifyIfLiked(String userId, String refId) {
+    return likeRepository.hasLike(userId, refId);
+  }
+
+  private List<Library> findLibrariesByUserId(String userId) {
     Query query = new Query();
-    query.addCriteria(Criteria.where("userId").is(userId).and("refId").is(refId));
-    return mongoTemplate.findOne(query, Library.class);
-  };
+    query.addCriteria(Criteria.where("userId").is(userId));
+    return mongoTemplate.find(query, Library.class);
+  }
 }

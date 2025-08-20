@@ -1,5 +1,7 @@
 package com.weftecnologia.music_player_api.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +29,9 @@ public class LibraryController {
   }
 
   @PostMapping
-  public ResponseApiDTO<Library> addLibrary(@Valid @RequestBody AddLibraryDTO dto) {
-    Library library = libraryRepository.addLibrary(dto);
-    return new ResponseApiDTO<Library>(
+  public ResponseApiDTO<List<Library>> addLibrary(@Valid @RequestBody AddLibraryDTO dto) {
+    List<Library> library = libraryRepository.addLibrary(dto);
+    return new ResponseApiDTO<List<Library>>(
         "biblioteca cadastrada com sucesso.",
         HttpStatus.OK.value(),
         library);
