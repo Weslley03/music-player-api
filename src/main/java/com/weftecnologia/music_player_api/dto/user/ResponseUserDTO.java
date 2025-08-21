@@ -5,14 +5,14 @@ public class ResponseUserDTO {
   private String name;
   private String email;
   private String avatar;
-  private boolean firtsAccess;
+  private boolean firstAccess;
 
-  public ResponseUserDTO(String id, String name, String email, String avatar, boolean firtsAccess) {
+  public ResponseUserDTO(String id, String name, String email, String avatar, boolean firstAccess) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.avatar = avatar;
-    this.firtsAccess = firtsAccess;
+    this.firstAccess = firstAccess;
   };
 
   public String getId() {
@@ -31,7 +31,7 @@ public class ResponseUserDTO {
     return avatar;
   };
 
-  public boolean isFirtsAccess() {
-    return firtsAccess;
+  public boolean isFirstAccess() {
+    return firstAccess;
   }
 };

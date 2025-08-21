@@ -14,15 +14,15 @@ public class User {
   private String email;
   private String password;
   private Binary avatar;
-  private boolean firtsAccess;
+  private boolean firstAccess;
 
-  public User(String id, String name, String email, String password, Binary avatar, boolean firtsAccess) {
+  public User(String id, String name, String email, String password, Binary avatar, boolean firstAccess) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.avatar = avatar;
-    this.firtsAccess = firtsAccess;
+    this.firstAccess = firstAccess;
   }
 
   public String getId() {
@@ -45,7 +45,7 @@ public class User {
     return this.avatar;
   }
 
-  public boolean isFirtsAccess() {
-    return firtsAccess;
+  public boolean isFirstAccess() {
+    return firstAccess;
   }
 }
