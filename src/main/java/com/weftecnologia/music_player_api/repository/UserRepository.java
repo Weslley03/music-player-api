@@ -6,6 +6,7 @@ import org.bson.types.Binary;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.weftecnologia.music_player_api.dto.user.AuthenticationDTO;
@@ -39,7 +40,7 @@ public class UserRepository {
           dto.getEmail(),
           encoder.encode(dto.getPassword()),
           avatarDecoded,
-          false);
+          true);
 
       mongoTemplate.insert(user, "user");
 
@@ -50,7 +51,7 @@ public class UserRepository {
           user.getName(),
           user.getEmail(),
           avatarInBase64,
-          user.isFirtsAccess());
+          user.isFirstAccess());
 
       return userResponse;
     } catch (Exception e) {
@@ -74,7 +75,7 @@ public class UserRepository {
           user.getName(),
           user.getEmail(),
           avatarInBase64,
-          user.isFirtsAccess());
+          user.isFirstAccess());
 
       return userResponse;
     } catch (Exception e) {
@@ -84,9 +85,8 @@ public class UserRepository {
   }
 
   public ResponseAuthDTO login(AuthenticationDTO dto) {
-    User user = mongoTemplate.findOne(
-        Query.query(Criteria.where("email").is(dto.getEmail())),
-        User.class);
+    Query emailQuery = Query.query(Criteria.where("email").is(dto.getEmail()));
+    User user = mongoTemplate.findOne(emailQuery, User.class);
 
     if (user == null) {
       return new ResponseAuthDTO(false, "usuário com email '" + dto.getEmail() + "' não encontrado.");
@@ -101,7 +101,10 @@ public class UserRepository {
         user.getName(),
         user.getEmail(),
         ConvertBinary.toBase64(user.getAvatar()),
-        user.isFirtsAccess());
+        user.isFirstAccess());
+
+    Update updateFirstAccess = new Update().set("firstAccess", false);
+    mongoTemplate.updateFirst(emailQuery, updateFirstAccess, User.class);
 
     return new ResponseAuthDTO(true, "login realizado com sucesso.", "0123456789", responseUserDTO);
   }

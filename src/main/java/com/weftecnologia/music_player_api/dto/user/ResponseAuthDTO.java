@@ -14,6 +14,7 @@ public class ResponseAuthDTO {
   public ResponseAuthDTO(boolean success, String message, String token, ResponseUserDTO user) {
     this.success = success;
     this.message = message;
+    this.token = token;
     this.user = user;
   }
 
