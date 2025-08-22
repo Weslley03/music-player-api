@@ -1,5 +1,7 @@
 package com.weftecnologia.music_player_api.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,5 +43,14 @@ public class AlbumController {
         "álbum encontrado com sucesso.",
         HttpStatus.OK.value(),
         albumResponse);
+  }
+
+  @GetMapping("/findAll")
+  public ResponseApiDTO<List<ResponseAlbumDTO>> getAll() {
+    List<ResponseAlbumDTO> albumsResponses = albumRepository.getAllAlbums();
+    return new ResponseApiDTO<List<ResponseAlbumDTO>>(
+        "albums encontrados:",
+        HttpStatus.OK.value(),
+        albumsResponses);
   }
 }

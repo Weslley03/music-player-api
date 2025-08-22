@@ -2,9 +2,12 @@ package com.weftecnologia.music_player_api.repository;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import org.bson.types.Binary;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.weftecnologia.music_player_api.dto.album.CreateAlbumDTO;
@@ -76,6 +79,28 @@ public class AlbumRepository {
     } catch (Exception e) {
       e.printStackTrace();
       throw new RuntimeException("erro ao buscar álbum.", e);
+    }
+  }
+
+  public List<ResponseAlbumDTO> getAllAlbums() {
+    try {
+      Query query = new Query();
+      query.limit(10);
+      List<Album> albums = mongoTemplate.find(query, Album.class);
+
+      return albums.stream()
+          .map(
+              album -> new ResponseAlbumDTO(
+                  album.getId(),
+                  ConvertBinary.toBase64(album.getImg()),
+                  album.getTitle(),
+                  album.getAuthor(),
+                  album.getCreatedAt(),
+                  false))
+          .toList();
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new DataAccessResourceFailureException("erro ao tentar buscar albums", e);
     }
   }
 }
